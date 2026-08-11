@@ -11,5 +11,3 @@ binding = "NAV_DATA"
 id = "7005878ae6f544269a5c4623039f705a"
 
 # API 认证密钥 —— 部署到 Cloudflare 后请在 Pages 控制台设置同名环境变量覆盖此值
-[vars]
-SECRET_KEY = "mynav-4a7f2c1e"

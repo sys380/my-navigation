@@ -579,7 +579,7 @@ function saveData(data) {
     _syncTimer = setTimeout(() => {
         fetch('/api/data', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-Auth-Key': 'mynav-4a7f2c1e' },
+            headers: { 'Content-Type': 'application/json', 'X-Auth-Key': '__YOUR_SECRET_KEY__' },
             body: JSON.stringify({ data: navData }),
         }).catch(() => {});
     }, 500);
@@ -600,7 +600,7 @@ async function initSync() {
         } else {
             fetch('/api/data', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-Auth-Key': 'mynav-4a7f2c1e' },
+                headers: { 'Content-Type': 'application/json', 'X-Auth-Key': '__YOUR_SECRET_KEY__' },
                 body: JSON.stringify({ data: navData }),
             }).catch(() => {});
         }
