@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🍬 陈杏糖</title>
+    <title>陈否糖</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2248%22%20fill%3D%22%23fff%22%20stroke%3D%22%23e0e0e0%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M%2030%2C35%20Q%2050%2C15%2070%2C35%22%20stroke%3D%22%23ff3366%22%20fill%3D%22none%22%20stroke-width%3D%2212%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M%2030%2C65%20Q%2050%2C85%2070%2C65%22%20stroke%3D%22%23ff3366%22%20fill%3D%22none%22%20stroke-width%3D%2212%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%228%22%20fill%3D%22%23ff3366%22%2F%3E%3C%2Fsvg%3E" />
     <link rel="dns-prefetch" href="https://api.iowen.cn" />
-    <link rel="dns-prefetch" href="https://www.google.com" />
-    <link rel="dns-prefetch" href="https://favicon.yandex.net" />
-    <link rel="dns-prefetch" href="https://icons.duckduckgo.com" />
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
         /* ---------- 变量 ---------- */
@@ -350,7 +347,7 @@
 <div class="container">
     <header class="header">
         <div class="logo">
-            <h1><i class="fas fa-compass"></i> 🍬 陈杏糖</h1>
+            <h1><i class="fas fa-compass"></i> 陈否糖</h1>
             <span class="time-display" id="timeDisplay"></span>
         </div>
         <div class="header-actions">
@@ -468,10 +465,8 @@ const STORE_THEME = 'mynav-theme';
 //  🔧 多服务 Favicon 获取（无需 VPN）
 // ============================================================
 const FAVICON_SERVICES = [
+    domain => `/api/data?icon=${domain}`,
     domain => `https://api.iowen.cn/favicon/${domain}.png`,
-    domain => `https://www.google.com/s2/favicons?domain=${domain}&sz=64`,
-    domain => `https://favicon.yandex.net/favicon/${domain}`,
-    domain => `https://icons.duckduckgo.com/ip3/${domain}.ico`,
 ];
 
 function getFaviconUrl(domain, index = 0) {
@@ -552,7 +547,7 @@ function migrateFaviconUrls(data) {
     data.forEach(cat => {
         if (!cat.links || !Array.isArray(cat.links)) return;
         cat.links.forEach(link => {
-            if (link.icon && link.icon.startsWith('https://www.google.com/s2/favicons')) {
+            if (link.icon && link.icon.startsWith('http')) {
                 const domain = getDomainFromUrl(link.url);
                 if (domain) {
                     link.icon = getFaviconUrl(domain);
