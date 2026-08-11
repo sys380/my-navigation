@@ -17,7 +17,7 @@ export async function onRequest(context) {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Headers': 'Content-Type, X-Auth-Key',
         'Access-Control-Max-Age': '86400',
       },
     });
@@ -78,6 +78,14 @@ export async function onRequest(context) {
 
   // ── POST: 保存数据 ──
   if (request.method === 'POST') {
+    // 认证校验
+    const authKey = request.headers.get('X-Auth-Key');
+    if (!authKey || authKey !== env.SECRET_KEY) {
+      return new Response(JSON.stringify({ error: '未授权' }), {
+        status: 401, headers: corsHeaders,
+      });
+    }
+
     let body;
     try { body = await request.json(); } catch (e) {
       return new Response(JSON.stringify({ error: '请求格式错误' }), {

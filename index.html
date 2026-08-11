@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>陈否糖</title>
+    <title>闄堝惁绯?/title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%2248%22%20fill%3D%22%23fff%22%20stroke%3D%22%23e0e0e0%22%20stroke-width%3D%224%22%2F%3E%3Cpath%20d%3D%22M%2030%2C35%20Q%2050%2C15%2070%2C35%22%20stroke%3D%22%23ff3366%22%20fill%3D%22none%22%20stroke-width%3D%2212%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M%2030%2C65%20Q%2050%2C85%2070%2C65%22%20stroke%3D%22%23ff3366%22%20fill%3D%22none%22%20stroke-width%3D%2212%22%20stroke-linecap%3D%22round%22%2F%3E%3Ccircle%20cx%3D%2250%22%20cy%3D%2250%22%20r%3D%228%22%20fill%3D%22%23ff3366%22%2F%3E%3C%2Fsvg%3E" />
     <link rel="dns-prefetch" href="https://api.iowen.cn" />
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
-        /* ---------- 变量 ---------- */
+        /* ---------- 鍙橀噺 ---------- */
         :root {
             --bg-body: #eef2f7;
             --bg-container: rgba(255, 255, 255, 0.82);
@@ -67,7 +67,7 @@
             transition: background 0.3s;
         }
 
-        /* ---------- 头部 ---------- */
+        /* ---------- 澶撮儴 ---------- */
         .header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 28px; gap: 16px; }
         .logo { display: flex; align-items: center; gap: 12px; }
         .logo h1 {
@@ -92,7 +92,7 @@
         .header-btn i { color: var(--accent); }
         .header-btn.icon-only { padding: 10px 12px; }
 
-        /* 背景下拉菜单 */
+        /* 鑳屾櫙涓嬫媺鑿滃崟 */
         .bg-dropdown { position: relative; display: inline-block; }
         .bg-dropdown .dropdown-menu {
             position: absolute; top: calc(100% + 6px); right: 0;
@@ -112,7 +112,7 @@
         .bg-dropdown .dropdown-menu button i { width: 20px; color: var(--accent); }
         .bg-dropdown .dropdown-menu .reset-bg-item i { color: var(--danger); }
 
-        /* ---------- 分类 ---------- */
+        /* ---------- 鍒嗙被 ---------- */
         .category {
             margin-bottom: 36px;
             transition: opacity 0.2s, border-left 0.2s;
@@ -164,7 +164,7 @@
         .cat-actions .del-cat-btn:hover { background: var(--danger-light); border-color: var(--danger); color: var(--danger); }
         .cat-actions .del-cat-btn i { font-size: 12px; }
 
-        /* ---------- 卡片 ---------- */
+        /* ---------- 鍗＄墖 ---------- */
         .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 10px; }
         .card {
             position: relative; display: flex; flex-direction: column;
@@ -201,7 +201,7 @@
             width: 28px; height: 28px; object-fit: contain; image-rendering: auto;
             pointer-events: none;
         }
-        /* 图标容器 —— 强制圆角裁剪 + 背景 */
+        /* 鍥炬爣瀹瑰櫒 鈥斺€?寮哄埗鍦嗚瑁佸壀 + 鑳屾櫙 */
         .icon-wrap {
             width: 32px; height: 32px;
             border-radius: 10px;
@@ -262,7 +262,7 @@
         .card .card-btns .edit-link-btn:hover { background: var(--accent); color: #fff; }
         .card .card-btns .del-link-btn:hover { background: var(--danger); color: #fff; }
 
-        /* ---------- 内嵌添加/编辑表单 ---------- */
+        /* ---------- 鍐呭祵娣诲姞/缂栬緫琛ㄥ崟 ---------- */
         .link-form {
             display: none; margin-top: 12px; padding: 14px 16px;
             background: var(--card-bg); border-radius: 18px;
@@ -287,7 +287,7 @@
         .link-form .cancel-btn { background: var(--tag-bg); color: var(--text-secondary); }
         .link-form .cancel-btn:hover { opacity: 0.7; }
 
-        /* ---------- 添加分类 ---------- */
+        /* ---------- 娣诲姞鍒嗙被 ---------- */
         .add-cat-wrapper { margin-top: 24px; display: flex; justify-content: center; }
         .add-cat-btn {
             background: var(--card-bg); border: 1px dashed var(--text-secondary);
@@ -297,7 +297,7 @@
         }
         .add-cat-btn:hover { background: var(--card-hover-bg); border-color: var(--accent); color: var(--accent); }
 
-        /* ---------- 页脚 ---------- */
+        /* ---------- 椤佃剼 ---------- */
         .footer {
             margin-top: 36px; padding-top: 18px;
             border-top: 1px solid var(--border);
@@ -306,7 +306,7 @@
         }
         .footer a { color: var(--accent); text-decoration: none; }
 
-        /* ---------- 响应式 ---------- */
+        /* ---------- 鍝嶅簲寮?---------- */
         @media (max-width: 768px) {
             .container { padding: 18px 16px 28px; }
             .header { flex-direction: column; align-items: stretch; }
@@ -347,30 +347,30 @@
 <div class="container">
     <header class="header">
         <div class="logo">
-            <h1><i class="fas fa-compass"></i> 陈否糖</h1>
+            <h1><i class="fas fa-compass"></i> 闄堝惁绯?/h1>
             <span class="time-display" id="timeDisplay"></span>
         </div>
         <div class="header-actions">
             <div class="bg-dropdown">
-                <button class="header-btn icon-only" id="bgBtn" title="背景设置"><i class="fas fa-image"></i></button>
+                <button class="header-btn icon-only" id="bgBtn" title="鑳屾櫙璁剧疆"><i class="fas fa-image"></i></button>
                 <div class="dropdown-menu" id="bgDropdownMenu">
-                    <button id="uploadBgOption"><i class="fas fa-upload"></i> 上传图片</button>
-                    <button id="resetBgOption" class="reset-bg-item"><i class="fas fa-undo-alt"></i> 重置背景</button>
+                    <button id="uploadBgOption"><i class="fas fa-upload"></i> 涓婁紶鍥剧墖</button>
+                    <button id="resetBgOption" class="reset-bg-item"><i class="fas fa-undo-alt"></i> 閲嶇疆鑳屾櫙</button>
                 </div>
             </div>
-            <button class="header-btn icon-only" id="themeBtn" title="深色/浅色"><i class="fas fa-moon"></i></button>
+            <button class="header-btn icon-only" id="themeBtn" title="娣辫壊/娴呰壊"><i class="fas fa-moon"></i></button>
         </div>
     </header>
 
     <div id="categoryContainer"></div>
 
     <div class="add-cat-wrapper">
-        <button class="add-cat-btn" id="addCatBtn"><i class="fas fa-plus-circle"></i> 添加分类</button>
+        <button class="add-cat-btn" id="addCatBtn"><i class="fas fa-plus-circle"></i> 娣诲姞鍒嗙被</button>
     </div>
 
     <footer class="footer">
-        <div>由 <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a> 驱动</div>
-        <div><span id="countDisplay">0 个链接</span></div>
+        <div>鐢?<a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a> 椹卞姩</div>
+        <div><span id="countDisplay">0 涓摼鎺?/span></div>
     </footer>
 </div>
 
@@ -378,73 +378,73 @@
 
 <script>
 const DEFAULT_DATA = [{
-    name: '常用工具', icon: 'fa-toolbox', links: [
-        { name: 'Google', icon: 'fas fa-search', url: 'https://www.google.com', desc: 'Google 搜索' },
-        { name: 'GitHub', icon: 'fab fa-github', url: 'https://github.com', desc: 'GitHub 代码托管' },
-        { name: 'ChatGPT', icon: 'fas fa-robot', url: 'https://chat.openai.com', desc: 'AI助手' },
-        { name: 'DeepSeek', icon: 'fas fa-brain', url: 'https://chat.deepseek.com', desc: 'AI对话' },
-        { name: 'Gmail', icon: 'fas fa-envelope', url: 'https://mail.google.com', desc: '邮箱' },
-        { name: 'Notion', icon: 'fas fa-note-sticky', url: 'https://www.notion.so', desc: 'Notion 笔记' },
+    name: '甯哥敤宸ュ叿', icon: 'fa-toolbox', links: [
+        { name: 'Google', icon: 'fas fa-search', url: 'https://www.google.com', desc: 'Google 鎼滅储' },
+        { name: 'GitHub', icon: 'fab fa-github', url: 'https://github.com', desc: 'GitHub 浠ｇ爜鎵樼' },
+        { name: 'ChatGPT', icon: 'fas fa-robot', url: 'https://chat.openai.com', desc: 'AI鍔╂墜' },
+        { name: 'DeepSeek', icon: 'fas fa-brain', url: 'https://chat.deepseek.com', desc: 'AI瀵硅瘽' },
+        { name: 'Gmail', icon: 'fas fa-envelope', url: 'https://mail.google.com', desc: '閭' },
+        { name: 'Notion', icon: 'fas fa-note-sticky', url: 'https://www.notion.so', desc: 'Notion 绗旇' },
     ]
 }, {
-    name: '社交媒体', icon: 'fa-hashtag', links: [
-        { name: '微博', icon: 'fab fa-weibo', url: 'https://weibo.com', desc: '新浪微博' },
-        { name: 'B站', icon: 'fas fa-tv', url: 'https://www.bilibili.com', desc: '哔哩哔哩' },
-        { name: 'YouTube', icon: 'fab fa-youtube', url: 'https://www.youtube.com', desc: 'YouTube 视频' },
+    name: '绀句氦濯掍綋', icon: 'fa-hashtag', links: [
+        { name: '寰崥', icon: 'fab fa-weibo', url: 'https://weibo.com', desc: '鏂版氮寰崥' },
+        { name: 'B绔?, icon: 'fas fa-tv', url: 'https://www.bilibili.com', desc: '鍝斿摡鍝斿摡' },
+        { name: 'YouTube', icon: 'fab fa-youtube', url: 'https://www.youtube.com', desc: 'YouTube 瑙嗛' },
         { name: 'Twitter/X', icon: 'fab fa-x-twitter', url: 'https://x.com', desc: 'Twitter X' },
-        { name: '知乎', icon: 'fab fa-zhihu', url: 'https://www.zhihu.com', desc: '知乎问答' },
-        { name: '小红书', icon: 'fas fa-book-open', url: 'https://www.xiaohongshu.com', desc: '小红书分享' },
+        { name: '鐭ヤ箮', icon: 'fab fa-zhihu', url: 'https://www.zhihu.com', desc: '鐭ヤ箮闂瓟' },
+        { name: '灏忕孩涔?, icon: 'fas fa-book-open', url: 'https://www.xiaohongshu.com', desc: '灏忕孩涔﹀垎浜? },
     ]
 }, {
-    name: '开发相关', icon: 'fa-code', links: [
-        { name: 'MDN', icon: 'fas fa-book', url: 'https://developer.mozilla.org', desc: 'MDN Web 文档' },
-        { name: 'Stack Overflow', icon: 'fab fa-stack-overflow', url: 'https://stackoverflow.com', desc: '技术问答' },
-        { name: 'npm', icon: 'fab fa-npm', url: 'https://www.npmjs.com', desc: 'npm 包管理' },
+    name: '寮€鍙戠浉鍏?, icon: 'fa-code', links: [
+        { name: 'MDN', icon: 'fas fa-book', url: 'https://developer.mozilla.org', desc: 'MDN Web 鏂囨。' },
+        { name: 'Stack Overflow', icon: 'fab fa-stack-overflow', url: 'https://stackoverflow.com', desc: '鎶€鏈棶绛? },
+        { name: 'npm', icon: 'fab fa-npm', url: 'https://www.npmjs.com', desc: 'npm 鍖呯鐞? },
         { name: 'Docker', icon: 'fab fa-docker', url: 'https://hub.docker.com', desc: 'Docker Hub' },
-        { name: 'Vercel', icon: 'fas fa-triangle', url: 'https://vercel.com', desc: 'Vercel 部署' },
-        { name: 'Cloudflare', icon: 'fas fa-cloud', url: 'https://dash.cloudflare.com', desc: 'Cloudflare 控制台' },
+        { name: 'Vercel', icon: 'fas fa-triangle', url: 'https://vercel.com', desc: 'Vercel 閮ㄧ讲' },
+        { name: 'Cloudflare', icon: 'fas fa-cloud', url: 'https://dash.cloudflare.com', desc: 'Cloudflare 鎺у埗鍙? },
     ]
 }];
 
 const DOMAIN_DESC_MAP = {
-    'google.com': 'Google 搜索', 'baidu.com': '百度搜索', 'bing.com': 'Bing 搜索',
-    'yahoo.com': 'Yahoo 搜索', 'sogou.com': '搜狗搜索', '360.cn': '360 搜索',
-    'weibo.com': '新浪微博', 'bilibili.com': '哔哩哔哩', 'youtube.com': 'YouTube 视频',
-    'x.com': 'Twitter X', 'twitter.com': 'Twitter', 'zhihu.com': '知乎问答',
-    'xiaohongshu.com': '小红书分享', 'douyin.com': '抖音短视频', 'kuaishou.com': '快手',
-    'facebook.com': 'Facebook', 'instagram.com': 'Instagram', 'linkedin.com': '领英',
-    'reddit.com': 'Reddit 社区', 'tiktok.com': 'TikTok', 'pinterest.com': 'Pinterest',
-    'imgur.com': 'Imgur 图床', 'twitch.tv': 'Twitch 直播', 'discord.com': 'Discord 聊天',
-    'slack.com': 'Slack 工作协作', 'zoom.us': 'Zoom 会议',
+    'google.com': 'Google 鎼滅储', 'baidu.com': '鐧惧害鎼滅储', 'bing.com': 'Bing 鎼滅储',
+    'yahoo.com': 'Yahoo 鎼滅储', 'sogou.com': '鎼滅嫍鎼滅储', '360.cn': '360 鎼滅储',
+    'weibo.com': '鏂版氮寰崥', 'bilibili.com': '鍝斿摡鍝斿摡', 'youtube.com': 'YouTube 瑙嗛',
+    'x.com': 'Twitter X', 'twitter.com': 'Twitter', 'zhihu.com': '鐭ヤ箮闂瓟',
+    'xiaohongshu.com': '灏忕孩涔﹀垎浜?, 'douyin.com': '鎶栭煶鐭棰?, 'kuaishou.com': '蹇墜',
+    'facebook.com': 'Facebook', 'instagram.com': 'Instagram', 'linkedin.com': '棰嗚嫳',
+    'reddit.com': 'Reddit 绀惧尯', 'tiktok.com': 'TikTok', 'pinterest.com': 'Pinterest',
+    'imgur.com': 'Imgur 鍥惧簥', 'twitch.tv': 'Twitch 鐩存挱', 'discord.com': 'Discord 鑱婂ぉ',
+    'slack.com': 'Slack 宸ヤ綔鍗忎綔', 'zoom.us': 'Zoom 浼氳',
     'teams.microsoft.com': 'Microsoft Teams', 'whatsapp.com': 'WhatsApp',
-    'telegram.org': 'Telegram', 'signal.org': 'Signal', 'weixin.qq.com': '微信',
+    'telegram.org': 'Telegram', 'signal.org': 'Signal', 'weixin.qq.com': '寰俊',
     'line.me': 'Line', 'kakaotalk.com': 'KakaoTalk', 'viber.com': 'Viber', 'snapchat.com': 'Snapchat',
-    'github.com': 'GitHub 代码托管', 'gitlab.com': 'GitLab', 'bitbucket.org': 'Bitbucket',
-    'stackoverflow.com': '技术问答 Stack Overflow', 'developer.mozilla.org': 'MDN Web 文档',
-    'mdn.dev': 'MDN 文档', 'npmjs.com': 'npm 包管理', 'yarnpkg.com': 'Yarn 包管理',
+    'github.com': 'GitHub 浠ｇ爜鎵樼', 'gitlab.com': 'GitLab', 'bitbucket.org': 'Bitbucket',
+    'stackoverflow.com': '鎶€鏈棶绛?Stack Overflow', 'developer.mozilla.org': 'MDN Web 鏂囨。',
+    'mdn.dev': 'MDN 鏂囨。', 'npmjs.com': 'npm 鍖呯鐞?, 'yarnpkg.com': 'Yarn 鍖呯鐞?,
     'docker.com': 'Docker', 'hub.docker.com': 'Docker Hub',
-    'vercel.com': 'Vercel 部署', 'netlify.com': 'Netlify 部署',
-    'cloudflare.com': 'Cloudflare', 'dash.cloudflare.com': 'Cloudflare 控制台',
-    'aws.amazon.com': 'AWS 云服务', 'azure.microsoft.com': 'Microsoft Azure',
-    'cloud.google.com': 'Google Cloud', 'csdn.net': 'CSDN 技术社区',
-    'juejin.cn': '掘金技术社区', 'v2ex.com': 'V2EX 社区', 'infoq.cn': 'InfoQ 技术媒体',
-    'oschina.net': '开源中国', 'gitee.com': 'Gitee 代码托管', 'coding.net': 'Coding 代码托管',
-    'aliyun.com': '阿里云', 'tencentcloud.com': '腾讯云', 'huaweicloud.com': '华为云',
-    'qcloud.com': '腾讯云', 'upyun.com': '又拍云', 'qiniu.com': '七牛云',
-    'taobao.com': '淘宝', 'jd.com': '京东', 'pinduoduo.com': '拼多多',
-    'meituan.com': '美团', 'dianping.com': '大众点评', 'amazon.com': 'Amazon', 'ebay.com': 'eBay',
-    'sohu.com': '搜狐', 'sina.com.cn': '新浪', '163.com': '网易', 'qq.com': '腾讯网',
-    'tencent.com': '腾讯', 'alibaba.com': '阿里巴巴',
-    'bbc.com': 'BBC', 'cnn.com': 'CNN', 'nytimes.com': '纽约时报', 'wsj.com': '华尔街日报',
-    'bloomberg.com': '彭博社', 'reuters.com': '路透社', 'ap.org': '美联社',
-    'xinhuanet.com': '新华网', 'people.com.cn': '人民网', 'cctv.com': '央视网',
-    'coursera.org': 'Coursera 课程', 'edx.org': 'edX 课程', 'udemy.com': 'Udemy 课程',
+    'vercel.com': 'Vercel 閮ㄧ讲', 'netlify.com': 'Netlify 閮ㄧ讲',
+    'cloudflare.com': 'Cloudflare', 'dash.cloudflare.com': 'Cloudflare 鎺у埗鍙?,
+    'aws.amazon.com': 'AWS 浜戞湇鍔?, 'azure.microsoft.com': 'Microsoft Azure',
+    'cloud.google.com': 'Google Cloud', 'csdn.net': 'CSDN 鎶€鏈ぞ鍖?,
+    'juejin.cn': '鎺橀噾鎶€鏈ぞ鍖?, 'v2ex.com': 'V2EX 绀惧尯', 'infoq.cn': 'InfoQ 鎶€鏈獟浣?,
+    'oschina.net': '寮€婧愪腑鍥?, 'gitee.com': 'Gitee 浠ｇ爜鎵樼', 'coding.net': 'Coding 浠ｇ爜鎵樼',
+    'aliyun.com': '闃块噷浜?, 'tencentcloud.com': '鑵捐浜?, 'huaweicloud.com': '鍗庝负浜?,
+    'qcloud.com': '鑵捐浜?, 'upyun.com': '鍙堟媿浜?, 'qiniu.com': '涓冪墰浜?,
+    'taobao.com': '娣樺疂', 'jd.com': '浜笢', 'pinduoduo.com': '鎷煎澶?,
+    'meituan.com': '缇庡洟', 'dianping.com': '澶т紬鐐硅瘎', 'amazon.com': 'Amazon', 'ebay.com': 'eBay',
+    'sohu.com': '鎼滅嫄', 'sina.com.cn': '鏂版氮', '163.com': '缃戞槗', 'qq.com': '鑵捐缃?,
+    'tencent.com': '鑵捐', 'alibaba.com': '闃块噷宸村反',
+    'bbc.com': 'BBC', 'cnn.com': 'CNN', 'nytimes.com': '绾界害鏃舵姤', 'wsj.com': '鍗庡皵琛楁棩鎶?,
+    'bloomberg.com': '褰崥绀?, 'reuters.com': '璺€忕ぞ', 'ap.org': '缇庤仈绀?,
+    'xinhuanet.com': '鏂板崕缃?, 'people.com.cn': '浜烘皯缃?, 'cctv.com': '澶缃?,
+    'coursera.org': 'Coursera 璇剧▼', 'edx.org': 'edX 璇剧▼', 'udemy.com': 'Udemy 璇剧▼',
     'codecademy.com': 'Codecademy', 'freecodecamp.org': 'freeCodeCamp',
-    'khanacademy.org': '可汗学院', 'leetcode.com': 'LeetCode 刷题',
+    'khanacademy.org': '鍙睏瀛﹂櫌', 'leetcode.com': 'LeetCode 鍒烽',
     'hackerrank.com': 'HackerRank', 'codewars.com': 'Codewars',
-    'wikipedia.org': '维基百科', 'medium.com': 'Medium 博客', 'notion.so': 'Notion 笔记',
+    'wikipedia.org': '缁村熀鐧剧', 'medium.com': 'Medium 鍗氬', 'notion.so': 'Notion 绗旇',
     'apple.com': 'Apple', 'microsoft.com': 'Microsoft',
-    'netflix.com': 'Netflix', 'spotify.com': 'Spotify 音乐',
+    'netflix.com': 'Netflix', 'spotify.com': 'Spotify 闊充箰',
     'github.dev': 'GitHub Codespaces', 'gitpod.io': 'GitPod',
     'codesandbox.io': 'CodeSandbox', 'stackblitz.com': 'StackBlitz',
     'codepen.io': 'CodePen', 'jsfiddle.net': 'JSFiddle', 'replit.com': 'Replit',
@@ -454,7 +454,7 @@ const DOMAIN_DESC_MAP = {
     'webstorm.com': 'WebStorm', 'phpstorm.com': 'PhpStorm',
     'rubymine.com': 'RubyMine', 'goland.com': 'GoLand',
     'datagrip.com': 'DataGrip', 'rider.com': 'Rider',
-    'fleet.com': 'Fleet', 'cursor.sh': 'Cursor 编辑器',
+    'fleet.com': 'Fleet', 'cursor.sh': 'Cursor 缂栬緫鍣?,
 };
 
 const STORE_DATA = 'mynav-data';
@@ -462,8 +462,7 @@ const STORE_BG = 'mynav-bg';
 const STORE_THEME = 'mynav-theme';
 
 // ============================================================
-//  🔧 多服务 Favicon 获取（无需 VPN）
-// ============================================================
+//  馃敡 澶氭湇鍔?Favicon 鑾峰彇锛堟棤闇€ VPN锛?// ============================================================
 const FAVICON_SERVICES = [
     domain => `/api/data?icon=${domain}`,
     domain => `https://api.iowen.cn/favicon/${domain}.png`,
@@ -485,8 +484,7 @@ function faviconFallback(img, domain, currentIndex) {
         img.dataset.ts = Date.now();
         return;
     }
-    // 所有服务都失败，显示默认图标
-    const wrap = img.closest('.icon-wrap');
+    // 鎵€鏈夋湇鍔￠兘澶辫触锛屾樉绀洪粯璁ゅ浘鏍?    const wrap = img.closest('.icon-wrap');
     if (wrap) {
         wrap.style.display = 'none';
         const fallback = document.createElement('i');
@@ -540,7 +538,7 @@ function getDescriptionFromDomain(domain) {
 }
 
 // ============================================================
-//  数据迁移：将旧 Google favicon 链接替换为新服务
+//  鏁版嵁杩佺Щ锛氬皢鏃?Google favicon 閾炬帴鏇挎崲涓烘柊鏈嶅姟
 // ============================================================
 function migrateFaviconUrls(data) {
     if (!Array.isArray(data)) return;
@@ -581,7 +579,7 @@ function saveData(data) {
     _syncTimer = setTimeout(() => {
         fetch('/api/data', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', 'X-Auth-Key': 'mynav-4a7f2c1e' },
             body: JSON.stringify({ data: navData }),
         }).catch(() => {});
     }, 500);
@@ -602,25 +600,24 @@ async function initSync() {
         } else {
             fetch('/api/data', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', 'X-Auth-Key': 'mynav-4a7f2c1e' },
                 body: JSON.stringify({ data: navData }),
             }).catch(() => {});
         }
-    } catch (e) { /* 离线时使用本地数据 */ }
+    } catch (e) { /* 绂荤嚎鏃朵娇鐢ㄦ湰鍦版暟鎹?*/ }
 }
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
 // ============================================================
-//  拖拽排序（动态禁用当表单激活时）
-// ============================================================
+//  鎷栨嫿鎺掑簭锛堝姩鎬佺鐢ㄥ綋琛ㄥ崟婵€娲绘椂锛?// ============================================================
 let dragData = null;
 
 function initDragDrop() {
     const container = document.getElementById('categoryContainer');
 
     container.addEventListener('dragstart', (e) => {
-        // 【新增】如果任何表单处于激活状态，禁止拖拽
+        // 銆愭柊澧炪€戝鏋滀换浣曡〃鍗曞浜庢縺娲荤姸鎬侊紝绂佹鎷栨嫿
         if (document.querySelector('.link-form.active')) {
             e.preventDefault();
             return;
@@ -744,7 +741,7 @@ function initDragDrop() {
 }
 
 // ============================================================
-//  渲染
+//  娓叉煋
 // ============================================================
 const catContainer = document.getElementById('categoryContainer');
 
@@ -754,12 +751,12 @@ function render() {
         total += cat.links.length;
         return `<div class="category" data-cat-index="${ci}">
             <div class="category-title">
-                <i class="fas fa-grip-lines drag-handle" title="拖拽排序"></i>
+                <i class="fas fa-grip-lines drag-handle" title="鎷栨嫿鎺掑簭"></i>
                 <i class="fas fa-circle"></i>
-                <span class="cat-name-text" data-rename="${ci}" title="双击重命名">${esc(cat.name)}</span>
+                <span class="cat-name-text" data-rename="${ci}" title="鍙屽嚮閲嶅懡鍚?>${esc(cat.name)}</span>
                 <div class="cat-actions">
-                    <button class="add-link-btn" data-add="${ci}"><i class="fas fa-plus"></i> 添加链接</button>
-                    <button class="del-cat-btn" data-delcat="${ci}" title="删除分类"><i class="fas fa-trash-alt"></i> 删除</button>
+                    <button class="add-link-btn" data-add="${ci}"><i class="fas fa-plus"></i> 娣诲姞閾炬帴</button>
+                    <button class="del-cat-btn" data-delcat="${ci}" title="鍒犻櫎鍒嗙被"><i class="fas fa-trash-alt"></i> 鍒犻櫎</button>
                 </div>
             </div>
             <div class="card-grid">
@@ -779,32 +776,32 @@ function render() {
                     </a>
                     <div class="card-drag-handle"><i class="fas fa-grip-lines"></i></div>
                     <div class="card-btns">
-                        <button class="edit-link-btn" data-editcat="${ci}" data-editlink="${li}" title="编辑"><i class="fas fa-pen"></i></button>
-                        <button class="del-link-btn" data-dellinkcat="${ci}" data-dellinkidx="${li}" title="删除"><i class="fas fa-times"></i></button>
+                        <button class="edit-link-btn" data-editcat="${ci}" data-editlink="${li}" title="缂栬緫"><i class="fas fa-pen"></i></button>
+                        <button class="del-link-btn" data-dellinkcat="${ci}" data-dellinkidx="${li}" title="鍒犻櫎"><i class="fas fa-times"></i></button>
                     </div>
                 </div>`;
                 }).join('')}
             </div>
             <div class="link-form" data-form="${ci}" data-icon-edited="false" data-desc-edited="false">
-                <input type="text" class="form-name" placeholder="名称" />
+                <input type="text" class="form-name" placeholder="鍚嶇О" />
                 <input type="text" class="form-url" placeholder="URL (https://...)" />
-                <input type="text" class="form-icon" placeholder="图标 (fa-xxx 或 图片URL)" value="fas fa-link" />
-                <input type="text" class="form-desc" placeholder="描述（可选）" />
+                <input type="text" class="form-icon" placeholder="鍥炬爣 (fa-xxx 鎴?鍥剧墖URL)" value="fas fa-link" />
+                <input type="text" class="form-desc" placeholder="鎻忚堪锛堝彲閫夛級" />
                 <input type="hidden" class="form-edit-idx" value="" />
                 <div class="form-actions">
-                    <button class="save-btn" data-save="${ci}">保存</button>
-                    <button class="cancel-btn" data-cancel="${ci}">取消</button>
+                    <button class="save-btn" data-save="${ci}">淇濆瓨</button>
+                    <button class="cancel-btn" data-cancel="${ci}">鍙栨秷</button>
                 </div>
             </div>
         </div>`;
     }).join('');
-    document.getElementById('countDisplay').textContent = `${total} 个链接`;
+    document.getElementById('countDisplay').textContent = `${total} 涓摼鎺;
     bindEvents();
     initFaviconTimeout();
 }
 
 // ============================================================
-//  事件绑定
+//  浜嬩欢缁戝畾
 // ============================================================
 function bindEvents() {
     document.querySelectorAll('.link-form').forEach(form => {
@@ -931,7 +928,7 @@ function bindEvents() {
             const ci = +this.dataset.dellinkcat;
             const li = +this.dataset.dellinkidx;
             const name = navData[ci]?.links[li]?.name || '';
-            if (confirm(`确定删除「${name}」吗？`)) {
+            if (confirm(`纭畾鍒犻櫎銆?{name}銆嶅悧锛焋)) {
                 navData[ci].links.splice(li, 1);
                 saveData(navData);
                 render();
@@ -943,7 +940,7 @@ function bindEvents() {
         btn.addEventListener('click', function(e) {
             e.stopPropagation();
             const ci = +this.dataset.delcat;
-            if (confirm(`确定删除分类「${navData[ci].name}」及其所有链接吗？`)) {
+            if (confirm(`纭畾鍒犻櫎鍒嗙被銆?{navData[ci].name}銆嶅強鍏舵墍鏈夐摼鎺ュ悧锛焋)) {
                 navData.splice(ci, 1);
                 saveData(navData);
                 render();
@@ -954,7 +951,7 @@ function bindEvents() {
     catContainer.querySelectorAll('[data-rename]').forEach(el => {
         el.addEventListener('dblclick', function() {
             const ci = +this.dataset.rename;
-            const name = prompt('重命名分类：', navData[ci].name);
+            const name = prompt('閲嶅懡鍚嶅垎绫伙細', navData[ci].name);
             if (name && name.trim()) {
                 navData[ci].name = name.trim();
                 saveData(navData);
@@ -965,8 +962,7 @@ function bindEvents() {
 }
 
 // ============================================================
-//  背景、主题、时钟、添加分类
-// ============================================================
+//  鑳屾櫙銆佷富棰樸€佹椂閽熴€佹坊鍔犲垎绫?// ============================================================
 function applyBg(url) { document.body.style.backgroundImage = `url(${url})`; }
 function loadBg() {
     const saved = localStorage.getItem(STORE_BG);
@@ -1023,14 +1019,14 @@ function updateThemeIcon() {
 
 function tick() {
     const n = new Date();
-    const w = ['日','一','二','三','四','五','六'];
+    const w = ['鏃?,'涓€','浜?,'涓?,'鍥?,'浜?,'鍏?];
     document.getElementById('timeDisplay').textContent =
-        `${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 周${w[n.getDay()]} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+        `${n.getFullYear()}骞?{n.getMonth()+1}鏈?{n.getDate()}鏃?鍛?{w[n.getDay()]} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
 }
 tick(); setInterval(tick, 30000);
 
 document.getElementById('addCatBtn').addEventListener('click', () => {
-    const name = prompt('新分类名称：');
+    const name = prompt('鏂板垎绫诲悕绉帮細');
     if (name && name.trim()) {
         navData.push({ name: name.trim(), icon: 'fa-folder', links: [] });
         saveData(navData);

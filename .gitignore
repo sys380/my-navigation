@@ -4,5 +4,3 @@ node_modules/
 Thumbs.db
 *.log
 .claude/
-app.js
-style.css
