@@ -1,4 +1,4 @@
-﻿# Cloudflare Pages 部署配置
+# Cloudflare Pages 部署配置
 # 用法：wrangler pages deploy
 # 说明：index.html 为静态资源，functions/ 自动作为 Pages Functions 上传
 name = "my-nav"
@@ -9,4 +9,3 @@ pages_build_output_dir = "./"
 [[kv_namespaces]]
 binding = "NAV_DATA"
 id = "7005878ae6f544269a5c4623039f705a"
-
