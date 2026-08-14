@@ -66,8 +66,15 @@ export async function onRequest(context) {
   if (request.method === 'GET') {
     try {
       const raw = await env.NAV_DATA.get(KV_KEY);
+      let parsed = null;
+      if (raw) {
+        parsed = JSON.parse(raw);
+        // 兼容旧格式：旧数据是纯数组，没有 updatedAt
+        if (Array.isArray(parsed)) parsed = { data: parsed, updatedAt: 0 };
+      }
       return new Response(JSON.stringify({
-        data: raw ? JSON.parse(raw) : null,
+        data: parsed && Array.isArray(parsed.data) ? parsed.data : null,
+        updatedAt: parsed && typeof parsed.updatedAt === 'number' ? parsed.updatedAt : 0,
       }), { headers: corsHeaders });
     } catch (e) {
       return new Response(JSON.stringify({ error: '读取失败' }), {
@@ -93,7 +100,7 @@ export async function onRequest(context) {
       });
     }
 
-    const { data } = body;
+    const { data, updatedAt } = body;
     if (!data || !Array.isArray(data)) {
       return new Response(JSON.stringify({ error: '数据格式错误' }), {
         status: 400, headers: corsHeaders,
@@ -101,8 +108,10 @@ export async function onRequest(context) {
     }
 
     try {
-      await env.NAV_DATA.put(KV_KEY, JSON.stringify(data));
-      return new Response(JSON.stringify({ success: true }), {
+      // 存 { data, updatedAt }，供客户端按"谁新用谁"合并
+      const ts = typeof updatedAt === 'number' ? updatedAt : Date.now();
+      await env.NAV_DATA.put(KV_KEY, JSON.stringify({ data, updatedAt: ts }));
+      return new Response(JSON.stringify({ success: true, updatedAt: ts }), {
         headers: corsHeaders,
       });
     } catch (e) {

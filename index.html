@@ -312,6 +312,19 @@
         }
         .footer a { color: var(--accent); text-decoration: none; }
 
+        /* 同步状态按钮 */
+        .sync-status {
+            background: transparent; border: 1px solid var(--border); cursor: pointer;
+            color: var(--text-secondary); font-size: 12px;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 12px; border-radius: 30px; transition: 0.15s;
+        }
+        .sync-status:hover { background: var(--accent-light); color: var(--accent); }
+        .sync-status.ok { color: #10b981; border-color: rgba(16,185,129,.35); }
+        .sync-status.error { color: var(--danger); border-color: rgba(239,68,68,.35); }
+        .sync-status.syncing i { animation: sync-spin 1s linear infinite; }
+        @keyframes sync-spin { to { transform: rotate(360deg); } }
+
         /* ---------- 响应式 ---------- */
         @media (max-width: 768px) {
             .container { padding: 18px 16px 28px; }
@@ -377,7 +390,10 @@
 
     <footer class="footer">
         <div>由 <a href="https://pages.cloudflare.com" target="_blank">Cloudflare Pages</a> 驱动</div>
-        <div><span id="countDisplay">0 个链接</span></div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <span id="countDisplay">0 个链接</span>
+            <button id="syncStatusBtn" class="sync-status" title="点击设置云同步密钥"><i class="fas fa-sync"></i> <span id="syncStatusText">同步中…</span></button>
+        </div>
     </footer>
 </div>
 
@@ -468,9 +484,13 @@ const STORE_DATA = 'mynav-data';
 const STORE_BG = 'mynav-bg';
 const STORE_THEME = 'mynav-theme';
 const STORE_SYNC_KEY = 'mynav-sync-key';
+const STORE_UPDATED_AT = 'mynav-updated';
 
 // 云同步密钥：存浏览器 localStorage，POST 时随 X-Auth-Key 头发送
 function getSyncKey() { return localStorage.getItem(STORE_SYNC_KEY) || ''; }
+// 数据最后修改时间戳，用于本地/云端"谁新用谁"
+function getUpdatedAt() { const n = parseInt(localStorage.getItem(STORE_UPDATED_AT) || '0', 10); return Number.isFinite(n) ? n : 0; }
+function setUpdatedAt(ts) { localStorage.setItem(STORE_UPDATED_AT, String(ts)); }
 
 // ============================================================
 //  🔧 多服务 Favicon 获取（无需 VPN）
@@ -586,39 +606,104 @@ function loadData() {
 }
 
 let _syncTimer = null;
+let _retryTimer = null;
+let _retryCount = 0;
+
+// 保存到本地并安排上传云端
 function saveData(data) {
     localStorage.setItem(STORE_DATA, JSON.stringify(data));
+    setUpdatedAt(Date.now());
+    scheduleSyncPush();
+}
+
+// 防抖 500ms 后推送到云端
+function scheduleSyncPush() {
     clearTimeout(_syncTimer);
-    _syncTimer = setTimeout(() => {
-        fetch('/api/data', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'X-Auth-Key': getSyncKey() },
-            body: JSON.stringify({ data: navData }),
-        }).then(r => { if (!r.ok) console.warn('云同步保存失败(' + r.status + ')：请检查同步密钥'); }).catch(() => {});
-    }, 500);
+    _syncTimer = setTimeout(pushToCloud, 500);
+}
+
+// 推送本地数据到云端（带超时/重试/状态提示）
+function pushToCloud(opts) {
+    const key = getSyncKey();
+    if (!key) {
+        setSyncStatus('error', '未设置同步密钥，点击设置');
+        return;
+    }
+    const body = JSON.stringify({ data: navData, updatedAt: getUpdatedAt() });
+    const ctrl = new AbortController();
+    const to = setTimeout(() => ctrl.abort(), 10000);
+    fetch('/api/data', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Auth-Key': key },
+        body,
+        keepalive: !!(opts && opts.keepalive),
+        signal: ctrl.signal,
+    }).then(r => {
+        clearTimeout(to);
+        if (r.ok) { _retryCount = 0; setSyncStatus('ok', '已同步'); }
+        else if (r.status === 401) { setSyncStatus('error', '同步密钥错误，点击重设'); }
+        else { setSyncStatus('error', '同步失败(' + r.status + ')，稍后重试'); scheduleSyncRetry(); }
+    }).catch(() => {
+        clearTimeout(to);
+        if (!(opts && opts.silent)) { setSyncStatus('error', '网络异常，稍后自动重试'); scheduleSyncRetry(); }
+    });
+}
+
+// 失败后指数退避重试（最多 3 次）
+function scheduleSyncRetry() {
+    if (_retryCount >= 3) { _retryCount = 0; setSyncStatus('error', '同步失败，请检查网络/密钥'); return; }
+    _retryCount++;
+    clearTimeout(_retryTimer);
+    _retryTimer = setTimeout(pushToCloud, 3000 * _retryCount);
 }
 
 let navData = loadData();
-if (!localStorage.getItem(STORE_DATA)) saveData(navData);
 
+// 页面加载时与云端同步：本地/云端按时间戳取较新者，防止被旧数据覆盖
 async function initSync() {
+    setSyncStatus('syncing', '同步中…');
     try {
         const r = await fetch('/api/data');
         const d = await r.json();
-        if (d.data && Array.isArray(d.data) && d.data.length > 0) {
-            navData = d.data;
+        const serverData = Array.isArray(d.data) && d.data.length > 0 ? d.data : null;
+        const serverUpdatedAt = d.updatedAt || 0;
+        const localUpdatedAt = getUpdatedAt();
+
+        if (!serverData) {
+            // 云端为空：把本地数据推送上去
+            if (navData && navData.length) pushToCloud();
+            else setSyncStatus('ok', '已同步');
+        } else if (localUpdatedAt > 0 && localUpdatedAt >= serverUpdatedAt) {
+            // 本地更新（或相同）：用本地并推送，避免被旧云端覆盖
+            migrateFaviconUrls(navData);
+            render();
+            pushToCloud();
+        } else {
+            // 云端更新（或本地从未保存过）：以云端为准
+            navData = serverData;
             migrateFaviconUrls(navData);
             localStorage.setItem(STORE_DATA, JSON.stringify(navData));
+            setUpdatedAt(serverUpdatedAt);
             render();
-        } else {
-            fetch('/api/data', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-Auth-Key': getSyncKey() },
-                body: JSON.stringify({ data: navData }),
-            }).then(r => { if (!r.ok) console.warn('云同步保存失败(' + r.status + ')：请检查同步密钥'); }).catch(() => {});
+            setSyncStatus('ok', '已同步');
         }
-    } catch (e) { /* 离线时使用本地数据 */ }
+    } catch (e) {
+        // 离线/失败：保持本地数据
+        setSyncStatus('error', '云端连接失败，使用本地数据');
+    }
 }
+
+// 关页面/切后台前立即推送，避免丢失
+window.addEventListener('beforeunload', () => {
+    clearTimeout(_syncTimer); clearTimeout(_retryTimer);
+    if (getSyncKey()) pushToCloud({ keepalive: true, silent: true });
+});
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+        clearTimeout(_syncTimer); clearTimeout(_retryTimer);
+        if (getSyncKey()) pushToCloud({ keepalive: true, silent: true });
+    }
+});
 
 function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
@@ -1015,14 +1100,22 @@ document.getElementById('resetBgOption').addEventListener('click', function() {
     bgDropdown.classList.remove('open');
 });
 
+// 同步状态提示（页脚）
+const syncStatusBtn = document.getElementById('syncStatusBtn');
+const syncStatusText = document.getElementById('syncStatusText');
+function setSyncStatus(kind, text) {
+    if (!syncStatusBtn) return;
+    syncStatusBtn.className = 'sync-status' + (kind ? ' ' + kind : '');
+    syncStatusText.textContent = text;
+}
+
 // 同步密钥设置：存 localStorage，POST 时作为 X-Auth-Key 发送
-document.getElementById('syncKeyOption').addEventListener('click', function() {
+function promptSyncKey() {
     const cur = getSyncKey();
     const hint = cur
         ? '\n当前已设置，输入新值可修改；留空并确定则清除。'
         : '\n首次使用请输入密钥（与 Cloudflare 项目上的 SECRET_KEY 一致）。';
     const k = prompt('云同步密钥（保存网址到云端时需要）：' + hint, cur);
-    bgDropdown.classList.remove('open');
     if (k === null) return;
     if (k.trim()) {
         localStorage.setItem(STORE_SYNC_KEY, k.trim());
@@ -1031,7 +1124,12 @@ document.getElementById('syncKeyOption').addEventListener('click', function() {
         localStorage.removeItem(STORE_SYNC_KEY);
         alert('同步密钥已清除');
     }
+}
+document.getElementById('syncKeyOption').addEventListener('click', function() {
+    bgDropdown.classList.remove('open');
+    promptSyncKey();
 });
+syncStatusBtn.addEventListener('click', promptSyncKey);
 
 const html = document.documentElement;
 const themeBtn = document.getElementById('themeBtn');
