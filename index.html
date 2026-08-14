@@ -217,12 +217,12 @@
             width: 100%; height: 100%;
             object-fit: cover;
             display: block;
-            mix-blend-mode: multiply; /* 让 favicon 自带的白色背景变透明 */
+            mix-blend-mode: multiply; /* 浅色模式: 让 favicon 白底变透明 */
         }
-        /* 深色模式下 multiply 会让图标变暗看不见，改回正常显示并保留白底 */
+        /* 深色模式: multiply 会让图标太暗, 改用反相+色相补偿, 白底反成黑色融入背景、图标仍可见 */
         [data-theme="dark"] .icon-wrap img {
             mix-blend-mode: normal;
-            background: #fff;
+            filter: invert(1) hue-rotate(180deg);
         }
         .icon-wrap .card-icon.fa,
         .icon-wrap .card-icon.fas,
