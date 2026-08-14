@@ -769,7 +769,7 @@ function render() {
             </div>
             <div class="card-grid">
                 ${cat.links.map((l, li) => {
-                    const isImg = l.icon && l.icon.startsWith('http');
+                    const isImg = l.icon && (l.icon.startsWith('http') || l.icon.startsWith('/api/'));
                     const iconHtml = `<span class="icon-wrap">${
                         isImg
                             ? `<img class="card-icon" src="${esc(l.icon)}" alt="favicon" referrerpolicy="no-referrer" loading="eager" data-fb="0" data-ts="${Date.now()}" onerror="faviconFallback(this,'${esc(getDomainFromUrl(l.url) || '')}',parseInt(this.dataset.fb)||0)" />`
