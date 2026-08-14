@@ -213,6 +213,8 @@
             flex-shrink: 0;
             margin-bottom: 4px;
         }
+        /* 图片图标(如透明底 favicon)：容器背景透明，避免露出灰/白底 */
+        .icon-wrap.is-img { background: transparent; }
         .icon-wrap img {
             width: 100%; height: 100%;
             object-fit: cover;
@@ -861,7 +863,7 @@ function render() {
             <div class="card-grid">
                 ${cat.links.map((l, li) => {
                     const isImg = l.icon && (l.icon.startsWith('http') || l.icon.startsWith('/api/'));
-                    const iconHtml = `<span class="icon-wrap">${
+                    const iconHtml = `<span class="icon-wrap${isImg ? ' is-img' : ''}">${
                         isImg
                             ? `<img class="card-icon" src="${esc(l.icon)}" alt="favicon" referrerpolicy="no-referrer" loading="eager" data-fb="0" data-ts="${Date.now()}" onerror="faviconFallback(this,'${esc(getDomainFromUrl(l.url) || '')}',parseInt(this.dataset.fb)||0)" />`
                             : `<i class="card-icon ${esc(l.icon || 'fas fa-link')}"></i>`
