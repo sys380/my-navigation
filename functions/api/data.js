@@ -4,8 +4,45 @@
 //  POST /api/data    → 保存数据 { data }
 //  所有设备共享同一份数据，无需同步码
 // ============================================================
+import { PNG } from 'pngjs';
 
 const KV_KEY = 'nav:shared';
+
+// 去掉 favicon 的白色背景：从边缘向内的白色连通域设为透明（保留 logo 内部的白）
+function stripWhiteBackground(buffer) {
+  if (!buffer || buffer.length < 8) return buffer;
+  const isPng = buffer[0] === 0x89 && buffer[1] === 0x50 && buffer[2] === 0x4e && buffer[3] === 0x47;
+  if (!isPng) return buffer;
+  try {
+    const png = PNG.sync.read(buffer);
+    const { width: w, height: h, data } = png;
+    const T = 240;
+    const isWhite = (i) => data[i] >= T && data[i + 1] >= T && data[i + 2] >= T && data[i + 3] > 0;
+    const visited = new Uint8Array(w * h);
+    const queue = [];
+    const push = (x, y) => {
+      if (x < 0 || y < 0 || x >= w || y >= h) return;
+      const idx = y * w + x;
+      if (visited[idx]) return;
+      visited[idx] = 1;
+      queue.push(idx);
+    };
+    for (let x = 0; x < w; x++) { push(x, 0); push(x, h - 1); }
+    for (let y = 0; y < h; y++) { push(0, y); push(w - 1, y); }
+    while (queue.length) {
+      const idx = queue.pop();
+      const i = idx * 4;
+      if (isWhite(i)) {
+        data[i + 3] = 0; // 变透明
+        const x = idx % w, y = (idx / w) | 0;
+        push(x + 1, y); push(x - 1, y); push(x, y + 1); push(x, y - 1);
+      }
+    }
+    return PNG.sync.write(png);
+  } catch (e) {
+    return buffer; // 解析失败则原样返回
+  }
+}
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -48,9 +85,12 @@ export async function onRequest(context) {
           const r = await fetch(src, { signal: ctrl.signal });
           clearTimeout(t);
           if (r.ok) {
-            return new Response(r.body, {
+            const buf = Buffer.from(await r.arrayBuffer());
+            const processed = stripWhiteBackground(buf);
+            const isPng = processed.length > 4 && processed[0] === 0x89 && processed[1] === 0x50;
+            return new Response(processed, {
               headers: {
-                'Content-Type': r.headers.get('Content-Type') || 'image/png',
+                'Content-Type': isPng ? 'image/png' : (r.headers.get('Content-Type') || 'image/png'),
                 'Cache-Control': 'public, max-age=604800',
                 'Access-Control-Allow-Origin': '*',
               },

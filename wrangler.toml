@@ -3,6 +3,7 @@
 # 说明：index.html 为静态资源，functions/ 自动作为 Pages Functions 上传
 name = "my-nav"
 compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = "./"
 
 # 云同步 KV 绑定 —— 与 functions/api/data.js 中 env.NAV_DATA 对应

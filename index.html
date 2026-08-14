@@ -213,18 +213,12 @@
             flex-shrink: 0;
             margin-bottom: 4px;
         }
-        /* 图片图标(如透明底 favicon)：容器背景透明，避免露出灰/白底 */
+        /* 图片图标(服务端已抠掉白底，透明底) —— 容器背景透明，图标直接浮在卡片上 */
         .icon-wrap.is-img { background: transparent; }
         .icon-wrap img {
             width: 100%; height: 100%;
             object-fit: cover;
             display: block;
-            mix-blend-mode: multiply; /* 浅色模式: 让 favicon 白底变透明 */
-        }
-        /* 深色模式: multiply 会让图标太暗, 改用反相+色相补偿, 白底反成黑色融入背景、图标仍可见 */
-        [data-theme="dark"] .icon-wrap img {
-            mix-blend-mode: normal;
-            filter: invert(1) hue-rotate(180deg);
         }
         .icon-wrap .card-icon.fa,
         .icon-wrap .card-icon.fas,
