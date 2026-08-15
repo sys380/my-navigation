@@ -68,6 +68,27 @@ function stripWhiteBackground(buffer) {
         push(x + 1, y); push(x - 1, y); push(x, y + 1); push(x, y - 1);
       }
     }
+    // 抠白后检查碎片化：若白色是 logo 一部分(被抠成大量碎片)，保留原图避免乱码
+    let comps = 0;
+    {
+      const seen = new Uint8Array(w * h), stack = [];
+      for (let sy = 0; sy < h; sy++) for (let sx = 0; sx < w; sx++) {
+        const si = sy * w + sx;
+        if (rgba[si * 4 + 3] > 0 && !seen[si]) {
+          comps++; stack.push(si); seen[si] = 1;
+          while (stack.length) {
+            const i = stack.pop(), x = i % w, y = (i / w) | 0;
+            for (const [nx, ny] of [[x + 1, y], [x - 1, y], [x, y + 1], [x, y - 1]]) {
+              if (nx >= 0 && ny >= 0 && nx < w && ny < h) {
+                const ni = ny * w + nx;
+                if (rgba[ni * 4 + 3] > 0 && !seen[ni]) { seen[ni] = 1; stack.push(ni); }
+              }
+            }
+          }
+        }
+      }
+    }
+    if (comps > 6) return buffer; // 被抠碎了，保留原始白底图
     // 重编码为 RGBA PNG(filter 0)
     const rowOut = w * 4, outData = Buffer.alloc((rowOut + 1) * h);
     for (let y = 0; y < h; y++) { outData[y * (rowOut + 1)] = 0; for (let i = 0; i < rowOut; i++) outData[y * (rowOut + 1) + 1 + i] = rgba[y * rowOut + i]; }
