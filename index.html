@@ -492,7 +492,7 @@ function setUpdatedAt(ts) { localStorage.setItem(STORE_UPDATED_AT, String(ts)); 
 //  🔧 多服务 Favicon 获取（无需 VPN）
 // ============================================================
 const FAVICON_SERVICES = [
-    domain => `/api/data?icon=${domain}`,
+    domain => `/api/data?icon=${domain}&v=3`, // v=3: 服务端抠白底 + 绕过旧缓存
     domain => `https://api.iowen.cn/favicon/${domain}.png`,
 ];
 
@@ -579,6 +579,9 @@ function migrateFaviconUrls(data) {
                 if (domain) {
                     link.icon = getFaviconUrl(domain);
                 }
+            } else if (link.icon && link.icon.startsWith('/api/data?icon=') && link.icon.indexOf('v=3') === -1) {
+                // 存量代理图标补上版本号, 绕过旧缓存
+                link.icon += '&v=3';
             }
         });
     });
